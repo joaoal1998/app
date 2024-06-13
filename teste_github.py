@@ -4,6 +4,8 @@ import pandas as pd
 from io import StringIO
 
 if st.button("Buscar"):
+
+    df = pd.DataFrame()
     
     # Seu token de acesso pessoal do GitHub
     token = st.secrets["database"]["token"]
