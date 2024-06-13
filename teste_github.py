@@ -28,10 +28,11 @@ if response.status_code == 200:
 else:
     print(f"Falha ao obter o arquivo: {response.status_code}")
 
-restart_button_clicked = st.button('Reiniciar App')
+# Flag de controle para reiniciar o aplicativo
+restart_flag = st.button('Reiniciar App')
 
-# Lógica para reiniciar o app quando o botão for clicado
-if restart_button_clicked:
-    # Atualiza a variável de controle, isso fará com que o Streamlit reinicie o app
+# Lógica para reiniciar o app
+if restart_flag:
+    # Altere o valor da flag para forçar um "reinício"
     st.caching.clear_cache()
-    st.experimental_rerun()
+    raise st.ScriptRunner.StopException
