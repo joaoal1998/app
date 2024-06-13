@@ -27,3 +27,11 @@ if response.status_code == 200:
     st.dataframe(df)
 else:
     print(f"Falha ao obter o arquivo: {response.status_code}")
+
+restart_button_clicked = st.button('Reiniciar App')
+
+# Lógica para reiniciar o app quando o botão for clicado
+if restart_button_clicked:
+    # Atualiza a variável de controle, isso fará com que o Streamlit reinicie o app
+    st.caching.clear_cache()
+    st.experimental_rerun()
