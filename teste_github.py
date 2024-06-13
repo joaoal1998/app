@@ -4,7 +4,7 @@ import pandas as pd
 from io import StringIO
 
 # Token de acesso pessoal do GitHub
-token = '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'
+token = st.secrets["database"]["token"]
 
 # Criando uma instância da classe Github com o token de acesso
 g = Github(token)
