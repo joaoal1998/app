@@ -7,7 +7,7 @@ from io import StringIO
 token = st.secrets["database"]["token"]
 
 # URL do arquivo CSV no repositório privado
-url = 'https://raw.githubusercontent.com/joaoal1998/csv/main/dados_genericos.csv'
+url = st.secrets["database"]["url"]
 
 # Cabeçalhos para a requisição autenticada
 headers = {
