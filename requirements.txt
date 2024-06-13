@@ -1,2 +1,2 @@
 pandas
-github
+requests
