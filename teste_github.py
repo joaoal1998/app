@@ -1,27 +1,27 @@
 import streamlit as st
-from github import Github
+import requests
 import pandas as pd
-from io import StringIO
 
-# Token de acesso pessoal do GitHub
+# Seu token de acesso pessoal do GitHub
 token = st.secrets["database"]["token"]
 
-# Criando uma instância da classe Github com o token de acesso
-g = Github(token)
+# URL do arquivo CSV no repositório privado
+url = 'https://raw.githubusercontent.com/joaoal1998/csv/main/dados_genericos.csv'
 
-# Nome do repositório e caminho para o arquivo CSV
-repo_name = 'joaoal1998/csv'
-file_path = 'dados_genericos.csv'
+# Cabeçalhos para a requisição autenticada
+headers = {
+    'Authorization': f'token {token}',
+    'Accept': 'application/vnd.github.v3.raw'
+}
 
-# Obtendo o conteúdo do arquivo CSV
-repo = g.get_repo(repo_name)
-file_content = repo.get_contents(file_path)
+# Fazendo a requisição para obter o conteúdo do CSV
+response = requests.get(url, headers=headers)
 
-# Lendo os dados do CSV usando StringIO para simular um arquivo
-csv_data = StringIO(file_content.decoded_content.decode('utf-8'))
-
-# Criando o DataFrame a partir dos dados CSV
-df = pd.read_csv(csv_data)
-
-# Exibindo as primeiras linhas do DataFrame para verificar se funcionou corretamente
-st.dataframe(df)
+# Verificando se a requisição foi bem-sucedida
+if response.status_code == 200:
+    # Lendo o conteúdo do CSV diretamente com pandas
+    csv_content = response.content.decode('ISO-8859-1')
+    df = pd.read_csv(pd.compat.StringIO(csv_content))
+    st.dataframe(df)
+else:
+    print(f"Falha ao obter o arquivo: {response.status_code}")
