@@ -1,3 +1,2 @@
 pandas
-StringIO 
-Github  
+Github
