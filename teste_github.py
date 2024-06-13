@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import pandas as pd
 from io import StringIO
+import time
 
 # Seu token de acesso pessoal do GitHub e URL do arquivo CSV no repositório privado
 token = st.secrets["database"]["token"]
@@ -13,8 +14,8 @@ headers = {
     'Accept': 'application/vnd.github.v3.raw'
 }
 
-@st.cache_data
-def get_data() -> pd.DataFrame:
+@st.experimental_memo
+def get_data(timestamp) -> pd.DataFrame:
     # Fazendo a requisição para obter o conteúdo do CSV
     response = requests.get(url, headers=headers)
     
@@ -30,6 +31,7 @@ def get_data() -> pd.DataFrame:
         return pd.DataFrame()  # Retorna um DataFrame vazio em caso de erro
 
 if st.button("Buscar"):
-    df = get_data()
+    timestamp = time.time()  # Usa o tempo atual para forçar a atualização do cache
+    df = get_data(timestamp)
     if not df.empty:
         st.dataframe(df)
