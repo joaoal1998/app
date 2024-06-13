@@ -33,6 +33,20 @@ restart_flag = st.button('Reiniciar App')
 
 # Lógica para reiniciar o app
 if restart_flag:
-    # Altere o valor da flag para forçar um "reinício"
-    st.caching.clear_cache()
-    raise st.ScriptRunner.StopException
+    # Exibe uma mensagem indicando que o aplicativo será reiniciado
+    st.warning('Reiniciando o aplicativo...')
+    # Simula um redirecionamento que força o navegador a recarregar a página
+    # Este truque pode ser usado para forçar o aplicativo a "reiniciar"
+    js = """
+    <script>
+    window.onload = function() {
+        setTimeout(function() {
+            window.location.reload(true);
+        }, 1000);
+    }
+    </script>
+    """
+    st.markdown(js, unsafe_allow_html=True)
+
+    # Finaliza a execução do script atual para evitar a execução adicional de código
+    st.stop()
