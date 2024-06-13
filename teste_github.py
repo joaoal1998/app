@@ -13,7 +13,7 @@ headers = {
     'Accept': 'application/vnd.github.v3.raw'
 }
 
-@st.experimental_memo
+@st.cache_data
 def get_data() -> pd.DataFrame:
     # Fazendo a requisição para obter o conteúdo do CSV
     response = requests.get(url, headers=headers)
